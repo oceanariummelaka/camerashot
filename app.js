@@ -1,3 +1,4 @@
+import 'app.css'
 var screenshot_button = document.getElementById('screenshot_button')
 
 screenshot_button.addEventListener('click', function() {
