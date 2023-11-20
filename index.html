@@ -6,7 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
 <script src="app.js"></script>
-        <link rel="stylesheet" href="app.css" />
+<script src="min.js"></script>
+<script src="canvas.js"></script>     
   </head>
   <body>
     <a-scene mindar-image="imageTargetSrc: targets.mind;" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
@@ -15,7 +16,9 @@
         <a-entity id="example-3D" gltf-model="butterflygroup.glb" animation-mixer="clip: *;" class="clickable" position="0 0 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-entity>
       </a-entity>
     </a-scene>
-<button id="screenshot_button">Screenshot</button>
+<div id="capture" style="padding: 10px; background: #f5da55">
+    <h4 style="color: #000; ">Hello world!</h4>
+</div>
 <audio src="music.mp3" autoplay loop></audio>    
   </body>
 </html>
