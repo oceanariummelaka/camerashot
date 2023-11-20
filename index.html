@@ -7,35 +7,43 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
 <script>
-var screenshot_button = document.getElementById('screenshot_button')
+`function take_photo()
+{
+document.querySelector("video").pause();
 
-screenshot_button.addEventListener('click', function() {
 const video = document.querySelector("video");
+
 const canvas = document.createElement("canvas");
-video.pause();
+        video.pause();
 
-// Obtain the view style data of the video
-const style = window.getComputedStyle(video),
-  width = parseFloat(style.getPropertyValue('width')),
-  height = parseFloat(style.getPropertyValue('height')),
-  top = parseFloat(style.getPropertyValue('top')),
-  left = parseFloat(style.getPropertyValue('left'));
+        let v_width = video.clientWidth*2;
+        let v_height = video.clientHeight*2;
+        
+        canvas.width = v_width;
+        canvas.height = v_height;
 
-// The width and height of the video may exceed the screen to achieve a full screen effect, 
-// so screenshots need to only capture the visible part of the video.
-const imgLeft = left * video.videoWidth / width
-const imgTop = top * video.videoHeight / height
-const drawLeft = imgLeft > 0 ? 0 : imgLeft
-const drawTop = imgTop > 0 ? 0 : imgTop
-const drawWidth = video.videoWidth
-const drawHeight = video.videoHeight
-canvas.width = video.videoWidth + imgLeft * 2
-canvas.height = video.videoHeight + imgTop * 2
+        let element = document.querySelector('video'),
+            style = window.getComputedStyle(element),
+            top = style.getPropertyValue('top');
 
-// render
-canvas.getContext('2d').drawImage(video, drawLeft, drawTop, drawWidth, drawHeight);
-video.play();
-})
+        canvas.getContext('2d').drawImage(video, 0, parseFloat(top), v_width, v_height);
+
+        let imgData = document.querySelector('a-scene').components.screenshot.getCanvas('perspective');
+
+        canvas.getContext('2d')
+            .drawImage(imgData, 0, 0, v_width, v_height);
+    
+if (window.navigator.msSaveOrOpenBlob) {
+    var blobObject = canvas.msToBlob();
+    window.navigator.msSaveOrOpenBlob(blobObject, 'download.png');
+} else {
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL("image/png");
+    a.download = 'download.png';
+    a.click();
+}
+document.querySelector("video").play();
+}`
 </script>  
   </head>
   <body>
@@ -45,7 +53,6 @@ video.play();
         <a-entity id="example-3D" gltf-model="butterflygroup.glb" animation-mixer="clip: *;" position="0 0 0" rotation="0 0 0" scale="0.1 0.1 0.1"></a-entity>
       </a-entity>
     </a-scene>
-<button id="screenshot_button">Screenshot</button>
 <audio src="music.mp3" autoplay loop></audio>    
   </body>
 </html>
