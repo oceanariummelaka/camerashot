@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
 
 <script>
-`function take_photo()
+ document.addEventListener("DOMContentLoaded", function take_photo()
 {
 document.querySelector("video").pause();
 
@@ -43,7 +43,7 @@ if (window.navigator.msSaveOrOpenBlob) {
     a.click();
 }
 document.querySelector("video").play();
-}`
+ });
 </script>  
   </head>
   <body>
